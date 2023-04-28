@@ -7,48 +7,107 @@
     <title>Brewery</title>
 </head>
 <body>
-    <h1 data-th-text="${brewery}"></h1>
-
-    <a href="javascript:history.back()">Back</a>
-
-
     <div data-th-if="${brewery!=null}">
-        <table>
-            <tbody>
-                <tr>
-                    <td >
-                        <span data-th-text="*{description}"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Beer Name</th>
-                    <th>Description</th>
-                    <th>Brewery Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-th-each="b: ${beers}" data-th-object="${b}">
-                    <td>
-                        <span data-th-text="*{beerName}"></span> 
-                    </td>
-                    <td>
-                        <span data-th-text="*{beerDescription}"></span> 
-                    </td>
-                    <td>
-                        <a data-th-href="@{/brewery/{id}}">
-                            <span data-th-text="*{breweryName}"></span>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <h1 data-th-text="${brewery.name}"></h1>
+
+        <a href="/">Back</a>
+
+        <div data-th-object="${brewery}">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span>Description: </span>
+                        </td>
+                        <td >
+                            <span data-th-text="*{description}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Address: </span>
+                        </td>
+                        <td >
+                            <span data-th-text="*{address1}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Phone: </span>
+                        </td>
+                        <td >
+                            <span data-th-text="*{phone}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Website: </span>
+                        </td>
+                        <td >
+                            <a data-th-href="*{website}">
+                                <span data-th-text="*{website}"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Beers</h2>
+            <form method="post" data-th-action="@{/brewery/{id}/order(id=${brewery.breweryId})}" data-th-object="${order}">
+                <button type="submit">Place Order </button>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody>
+                        <tr>
+                            <td>
+                                <span data-th-text="*{brewerId}"></span> 
+                            </td>
+                            <td>
+                                <span data-th-text="*{orders}"></span> 
+                            </td>
+                            <td>
+                                <input type ="text" data-th-field="*{quantity}">
+                            </td>
+                        </tr>
+                    </tbody> -->
+                    <tbody>
+                        <tr data-th-each="ord: *{orders}" data-th-object="${ord}">
+                            <td>
+                                <span data-th-text="*{beerName}"></span> 
+                            </td>
+                            <td>
+                                <span data-th-text="*{beerDescription}"></span> 
+                            </td>
+                            <td>
+                                <input type ="number" data-th-value="*{quantity}">
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!-- <tbody>
+                        <tr data-th-each="b: ${brewery.beers}" data-th-object="${b}">
+                            <td>
+                                <span data-th-text="*{beerName}"></span> 
+                            </td>
+                            <td>
+                                <span data-th-text="*{beerDescription}"></span> 
+                            </td>
+                            <td>
+                                <input type = "text">
+                            </td>
+                        </tr>
+                    </tbody> -->
+                </table>
+            </form>
+        </div>
     </div>
+    
     <div data-th-unless="brewery!=null">
         <span>Brewery not found</span>
-</div>
+    </div>
 </body>
 </html>

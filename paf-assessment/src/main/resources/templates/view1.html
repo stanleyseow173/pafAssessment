@@ -12,31 +12,35 @@
 		<h1 data-th-text="${style}"></h1>
 
         <a href="javascript:history.back()">Back</a>
-		<table border="1">
-			<thead>
-				<tr>
-					<th>Beer Name</th>
-					<th>Description</th>
-                    <th>Brewery Name</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr data-th-each="b: ${beers}" data-th-object="${b}">
-					<td>
-						<span data-th-text="*{beerName}"></span> 
-					</td>
-                    <td>
-						<span data-th-text="*{beerDescription}"></span> 
-					</td>
-					<td>
-						<a data-th-href="@{/brewery/{id}}">
-							<span data-th-text="*{breweryName}"></span>
-						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
+        <div data-th-if="${beers.size()>0}">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Beer Name</th>
+                        <th>Description</th>
+                        <th>Brewery Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="b: ${beers}" data-th-object="${b}">
+                        <td>
+                            <span data-th-text="*{beerName}"></span> 
+                        </td>
+                        <td>
+                            <span data-th-text="*{beerDescription}"></span> 
+                        </td>
+                        <td>
+                            <a data-th-href="@{/brewery/{id}}">
+                                <span data-th-text="*{breweryName}"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-th-unless="${beers.size()>0}">
+            <span>No beers found for this style</span>
+        </div>
 	</body>
 </body>
 </html>

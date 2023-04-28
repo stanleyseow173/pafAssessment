@@ -4,14 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Breweries</title>
+    <title>Brewery</title>
 </head>
 <body>
-
-    <h1 data-th-text="${style}"></h1>
+    <h1 data-th-text="${brewery}"></h1>
 
     <a href="javascript:history.back()">Back</a>
-    <div data-th-if="${beers.size()>0}">
+
+
+    <div data-th-if="${brewery!=null}">
+        <table>
+            <tbody>
+                <tr>
+                    <td >
+                        <span data-th-text="*{description}"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table border="1">
             <thead>
                 <tr>
@@ -29,7 +39,7 @@
                         <span data-th-text="*{beerDescription}"></span> 
                     </td>
                     <td>
-                        <a data-th-href="@{/brewery/{id}(id=${b.breweryId})}">
+                        <a data-th-href="@{/brewery/{id}}">
                             <span data-th-text="*{breweryName}"></span>
                         </a>
                     </td>
@@ -37,8 +47,8 @@
             </tbody>
         </table>
     </div>
-    <div data-th-unless="${beers.size()>0}">
-        <span>No beers found for this style</span>
+    <div data-th-unless="brewery!=null">
+        <span>Brewery not found</span>
 </div>
 </body>
 </html>

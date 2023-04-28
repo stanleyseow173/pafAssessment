@@ -21,9 +21,9 @@ public class BeerRepository {
 	@Autowired
 	private JdbcTemplate jdbcTemplate; 
 
-	//select style_name, count(b.id) as beer_count
-	// from styles s, beers b 
-	// where b.style_id = s.id
+	// select s.id, style_name, count(b.id) as beer_count
+	// from styles s left join beers b 
+	// on s.id = b.style_id
 	// group by s.id
 	// order by beer_count DESC, style_name;
 
@@ -51,10 +51,16 @@ public class BeerRepository {
 		return beers;
 	}
 
+	// SELECT b.id, b.name, b.descript FROM beers b, breweries w where w.id = b.brewery_id and w.id = 2 order by b.name ASC;
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public Optional<Brewery> getBeersFromBrewery(/* You can add any number of parameters here */) {
+	public Optional<Brewery> getBeersFromBrewery(int id) {
 		// TODO: Task 4
+		List<Beer> beers = new ArrayList<Beer>();
+		beers = jdbcTemplate.query(GET_BEERS, new BeerRowMapper(), new Object[]{id});
+		Brewery brewery = new Brewery();
+		brewery = jdbcTemplate.queryForObject(GET_BREWERY_BY_ID,new BreweryRowMapper(),new Object[]{id});
+		brewery.setBeers(beers);
 
-		return Optional.empty();
+		return Optional.of(brewery);
 	}
 }
